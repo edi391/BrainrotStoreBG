@@ -110,7 +110,7 @@ h1 {
   <!-- Продукт 1 -->
   <div class="card">
     <img src="images/Garamadundung.webp" class="product-img" alt="Garamadundung">
-    <h2>Garama And Madundung</h2>
+    <h2>Garamadundung</h2>
     <p>Цена: 10 €</p>
     <button class="button" onclick="openForm('Garamadundung')">Поръчай</button>
   </div>
@@ -124,7 +124,7 @@ h1 {
   <!-- Продукт 3 -->
   <div class="card">
     <img src="images/Nah_uh.webp" class="product-img" alt="Nah uh">
-    <h2>Dragon Cannelloni (Rainbow)</h2>
+    <h2>Nah uh</h2>
     <p>Цена: 150 €</p>
     <button class="button" onclick="openForm('Nah uh')">Поръчай</button>
   </div>
@@ -132,11 +132,11 @@ h1 {
 
 <!-- 📩 Popup форма за поръчки -->
 <div id="orderForm" class="popup">
-  <form action="https://formspree.io/f/mreanjqb" method="POST">
+  <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return showConfirmation(event)">
     <h2>Поръчка:</h2>
     <input type="hidden" id="prod" name="Product">
     <input type="text" name="Username" placeholder="Roblox Username" required>
-    <input type="text" name="Contact" placeholder="Discord / Instagram" required>
+    <input type="text" name="Phone" placeholder="Телефонен номер" required>
     <button type="submit" class="button">Изпрати</button>
     <button type="button" class="button close" onclick="closeForm()">Отказ</button>
   </form>
@@ -147,8 +147,39 @@ function openForm(name) {
   document.getElementById('prod').value = name;
   document.getElementById('orderForm').style.display = 'block';
 }
+
+// Затваряне на popup
 function closeForm() {
   document.getElementById('orderForm').style.display = 'none';
+}
+
+// След изпращане на формата, показваме съобщение на сайта
+function showConfirmation(event) {
+  event.preventDefault(); // спираме default submit, за да покажем съобщението
+  const form = document.getElementById('orderFormElement');
+
+  // Пращаме реално формата към Formspree
+  fetch(form.action, {
+    method: form.method,
+    body: new FormData(form),
+    headers: {
+      'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      // Затваряме формата
+      closeForm();
+      // Показваме съобщение
+      alert("Поръчката ви е направена успешно! Ще се свържем с вас в рамките на 1 работен час.");
+      form.reset(); // чистим формата за следваща поръчка
+    } else {
+      alert("Възникна грешка. Моля, опитайте отново.");
+    }
+  }).catch(error => {
+    alert("Възникна грешка. Моля, опитайте отново.");
+  });
+
+  return false; // за да не презарежда страницата
 }
 </script>
 
