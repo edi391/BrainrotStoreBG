@@ -143,8 +143,8 @@ h1 {
 <h1>Brainrot Store BG</h1>
 
 <div class="products">
-  <div class="card" onclick="openForm('Garamadundung',10)">
-    <img src="images/Garamadundung.webp" class="product-img" alt="Garamadundung">
+  <div class="card" onclick="openForm('Garama and Madundung',10)">
+    <img src="images/Garamadundung.webp" class="product-img" alt="Garama and Madundung">
     <h2>Garama and Madundung</h2>
     <p>Цена: 10 €</p>
     <button class="button">Поръчай</button>
@@ -157,8 +157,8 @@ h1 {
     <button class="button">Поръчай</button>
   </div>
 
-  <div class="card" onclick="openForm('Nah uh',150)">
-    <img src="images/Nah_uh.webp" class="product-img" alt="Nah uh">
+  <div class="card" onclick="openForm('Dragon Cannelloni (Rainbow)',150)">
+    <img src="images/Nah_uh.webp" class="product-img" alt="Dragon Cannelloni (Rainbow)">
     <h2>Dragon Cannelloni (Rainbow)</h2>
     <p>Цена: 150 €</p>
     <button class="button">Поръчай</button>
@@ -210,7 +210,7 @@ function showConfirmation(event){
     .then(response=>{
       if(response.ok){
         closeForm();
-        alert(`Поръчката ви е направена успешно! Продукт: ${form.Product.value}, цена: ${finalPrice} €. Ще се свържем с вас възможно най-свoрo.`);
+        alert(`Поръчката ви е направена успешно! Продукт: ${form.Product.value}, цена: ${finalPrice} €. Ще се свържем с вас възможно най-скоро.`);
         form.reset();
       } else {alert("Възникна грешка. Моля, опитайте отново.");}
     }).catch(error=>{alert("Възникна грешка. Моля, опитайте отново.");});
