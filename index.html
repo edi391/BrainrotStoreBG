@@ -211,35 +211,29 @@ body {
 </div>
 
 <script>
-let currentPrice=0;
-let cartCount=0;
-let snowActive=false;
+let currentPrice = 0;
+let cartCount = 0;
+let snowActive = false;
 
-function openProduct(name,speed,price,effect){
+function openProduct(name, speed, price, effect){
   document.getElementById('home').style.display="none";
   document.getElementById('productPage').style.display="block";
 
-  document.getElementById('productName').innerText=name;
-  document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
+  document.getElementById('productName').innerText = name;
+  document.getElementById('productSpeed').innerText = speed + ((speed>1000)?'B/s':'M/s');
 
   const productImg = document.getElementById('productImg');
   const imgPath = "images/" + name.replace(/\s/g,"_") + ".webp";
   productImg.style.display = "none"; 
   const imgTest = new Image();
-  imgTest.onload = () => {
-      productImg.src = imgPath;
-      productImg.style.display = "block"; 
-  };
-  imgTest.onerror = () => {
-      productImg.style.display = "none"; 
-  };
+  imgTest.onload = () => { productImg.src = imgPath; productImg.style.display = "block"; };
+  imgTest.onerror = () => { productImg.style.display = "none"; };
   imgTest.src = imgPath;
 
   const badge1=document.getElementById('productBadge1');
   const badge2=document.getElementById('productBadge2');
   badge1.style.display='none';
   badge2.style.display='none';
-
   if(effect==='rainbow-secret'){
     badge1.style.display='block';
     badge1.innerText="SECRET";
@@ -253,10 +247,12 @@ function openProduct(name,speed,price,effect){
     badge1.innerText="SECRET";
   }
 
-  document.getElementById('p1').innerText=price+" €";
-  document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
-  document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
-  currentPrice=price;
+  document.getElementById('p1').innerText = price+" €";
+  document.getElementById('p2').innerText = (price*2*0.95).toFixed(2)+" € (-5%)";
+  document.getElementById('p5').innerText = (price*5*0.9).toFixed(2)+" € (-10%)";
+
+  currentPrice = price;
+  document.getElementById("finalPrice").innerText = "Общо: "+currentPrice.toFixed(2)+" €";
 
   removeSnow();
   if(effect==='snow'){
@@ -273,11 +269,18 @@ function openProduct(name,speed,price,effect){
   }
 }
 
-function removeSnow(){
-  if(snowActive){
-    document.querySelectorAll('.snowflake').forEach(f=>f.remove());
-    snowActive=false;
+function selectPackage(qty, price, element){
+  document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
+  element.classList.add("selected");
+
+  if(qty===1){
+    currentPrice = price;
+  } else if(qty===2){
+    currentPrice = price*2*0.95;
+  } else if(qty===5){
+    currentPrice = price*5*0.9;
   }
+  document.getElementById("finalPrice").innerText = "Общо: "+currentPrice.toFixed(2)+" €";
 }
 
 function goHome(){
@@ -286,17 +289,17 @@ function goHome(){
   removeSnow();
 }
 
-function selectPackage(qty,price,element){
-  document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
-  element.classList.add("selected");
-  currentPrice=(qty===1?price:(qty===2?price*2*0.95:price*5*0.9));
-  document.getElementById("finalPrice").innerText="Общо: "+currentPrice.toFixed(2)+" €";
-}
-
 function addToCart(){
   cartCount++;
   document.getElementById('cartCount').innerText=cartCount;
   alert("Продуктът е добавен в количката! Ще се свържем с вас възможно най-скоро.");
+}
+
+function removeSnow(){
+  if(snowActive){
+    document.querySelectorAll('.snowflake').forEach(f=>f.remove());
+    snowActive=false;
+  }
 }
 </script>
 </body>
