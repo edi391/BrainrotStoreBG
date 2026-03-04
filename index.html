@@ -23,29 +23,13 @@ body {
 }
 
 /* Canvas за частици */
-#bgCanvas {
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-}
+#bgCanvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
 
 /* Заглавие */
-h1 {
-  padding: 30px;
-  font-size: 48px;
-  text-shadow: 2px 2px 8px #000;
-}
+h1 { padding: 30px; font-size: 48px; text-shadow: 2px 2px 8px #000; }
 
 /* Грид за продуктите */
-.products {
-  display: grid;
-  gap: 30px;
-  padding: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
+.products { display: grid; gap: 30px; padding: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 
 /* Продуктова карта */
 .card {
@@ -55,20 +39,11 @@ h1 {
   transition: transform 0.4s, box-shadow 0.4s;
   cursor: pointer;
 }
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 25px rgba(255,255,255,0.3);
-}
+.card:hover { transform: translateY(-10px); box-shadow: 0 10px 25px rgba(255,255,255,0.3); }
 
 /* Снимки */
-.product-img {
-  width: 100%;
-  border-radius: 15px;
-  transition: transform 0.4s;
-}
-.card:hover .product-img {
-  transform: scale(1.1);
-}
+.product-img { width: 100%; border-radius: 15px; transition: transform 0.4s; }
+.card:hover .product-img { transform: scale(1.1); }
 
 /* Бутон */
 .button {
@@ -82,13 +57,10 @@ h1 {
   cursor: pointer;
   transition: transform 0.2s, background 0.3s;
 }
-.button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(45deg, #d500f9, #ff00cc);
-}
+.button:hover { transform: scale(1.05); background: linear-gradient(45deg, #d500f9, #ff00cc); }
 
 /* Popup форма */
-.popup {
+.popup, #cartPopup {
   display: none;
   position: fixed;
   top:50%;
@@ -102,38 +74,21 @@ h1 {
   box-shadow: 0 0 20px rgba(255,255,255,0.4);
   text-align: left;
 }
-.popup h2 {
-  text-align:center;
-  margin-bottom:20px;
+.popup h2, #cartPopup h2 { text-align:center; margin-bottom:20px; }
+.popup input, .popup button, #cartPopup button {
+  width: 90%; padding: 12px; margin: 10px 0; border-radius: 12px; border: none; font-size: 16px;
 }
-.popup input, .popup button {
-  width: 90%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-}
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #fff;
-  margin: 10px 0;
-}
-.checkbox-container input {
-  width:auto;
-}
-.popup .close {
-  background: #b71c1c;
-}
+.checkbox-container { display:flex; align-items:center; gap:8px; font-size:14px; color:#fff; margin:10px 0; }
+.checkbox-container input {width:auto;}
+.popup .close, #cartPopup .close { background: #b71c1c; }
+
+/* Кошница таблица */
+#cartTable { width: 100%; border-collapse: collapse; color: #fff; margin-bottom: 15px; }
+#cartTable th, #cartTable td { border: 1px solid #fff; padding: 8px; text-align: left; }
+#cartTable th { background: rgba(255,255,255,0.2); }
 
 /* Мобилна оптимизация */
-@media(max-width:600px){
-  h1{font-size:36px;}
-  .products{grid-template-columns:1fr;}
-}
+@media(max-width:600px){ h1{font-size:36px;} .products{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
@@ -143,28 +98,27 @@ h1 {
 <h1>Brainrot Store BG</h1>
 
 <div class="products">
-  <div class="card" onclick="openForm('Garamadundung',10)">
+  <div class="card" onclick="addToCart('Garama and Madundung',10,'images/Garamadundung.webp')">
     <img src="images/Garamadundung.webp" class="product-img" alt="Garamadundung">
     <h2>Garama and Madundung</h2>
     <p>Цена: 10 €</p>
-    <button class="button">Поръчай</button>
+    <button class="button">Добави в кошницата</button>
   </div>
-
-  <div class="card" onclick="openForm('Cooki and Milki',20)">
+  <div class="card" onclick="addToCart('Cooki and Milki',20,'images/Cooki_and_milki.webp')">
     <img src="images/Cooki_and_milki.webp" class="product-img" alt="Cooki and Milki">
     <h2>Cooki and Milki</h2>
     <p>Цена: 20 €</p>
-    <button class="button">Поръчай</button>
+    <button class="button">Добави в кошницата</button>
   </div>
-
-  <div class="card" onclick="openForm('Nah uh',150)">
+  <div class="card" onclick="addToCart('Dragon Cannelloni (Rainbow)',150,'images/Nah_uh.webp')">
     <img src="images/Nah_uh.webp" class="product-img" alt="Nah uh">
     <h2>Dragon Cannelloni (Rainbow)</h2>
     <p>Цена: 150 €</p>
-    <button class="button">Поръчай</button>
+    <button class="button">Добави в кошницата</button>
   </div>
 </div>
 
+<!-- Popup поръчка -->
 <div id="orderForm" class="popup">
   <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return showConfirmation(event)">
     <h2>Данни за поръчка</h2>
@@ -184,36 +138,64 @@ h1 {
   </form>
 </div>
 
+<!-- Popup кошница -->
+<div id="cartPopup">
+  <h2>Вашата кошница</h2>
+  <table id="cartTable">
+    <tr><th>Продукт</th><th>Цена</th></tr>
+  </table>
+  <button class="button close" onclick="closeCart()">Затвори</button>
+</div>
+
 <script>
+// Кошница
+let cart = [];
+
+function addToCart(name, price, img){
+  cart.push({name, price, img});
+  alert(`Добавено в кошницата: ${name}`);
+}
+
+// Показване на кошницата
+function openCart(){
+  const table = document.getElementById('cartTable');
+  table.innerHTML = '<tr><th>Продукт</th><th>Цена</th></tr>';
+  cart.forEach(item=>{
+    const row = table.insertRow();
+    row.insertCell(0).innerHTML = item.name;
+    row.insertCell(1).innerHTML = item.price + ' €';
+  });
+  document.getElementById('cartPopup').style.display='block';
+}
+function closeCart(){document.getElementById('cartPopup').style.display='none';}
+
 // Popup форма
 let currentPrice = 0;
 function openForm(name, price){
-  document.getElementById('prod').value = name;
-  document.getElementById('price').value = price;
-  currentPrice = price;
-  document.getElementById('orderForm').style.display = 'block';
+  document.getElementById('prod').value=name;
+  document.getElementById('price').value=price;
+  currentPrice=price;
+  document.getElementById('orderForm').style.display='block';
 }
-function closeForm(){
-  document.getElementById('orderForm').style.display = 'none';
-}
+function closeForm(){document.getElementById('orderForm').style.display='none';}
 
 // Потвърждение при submit + код за отстъпка
 function showConfirmation(event){
   event.preventDefault();
-  const form = document.getElementById('orderFormElement');
-  const discountInput = form.DiscountCode.value.trim();
-  let finalPrice = currentPrice;
-  if(discountInput.toUpperCase()==="DISCOUNT10"){finalPrice=(currentPrice*0.9).toFixed(2);}
-  form.querySelector('#price').value = finalPrice;
+  const form=document.getElementById('orderFormElement');
+  let finalPrice=currentPrice;
+  const discount=form.DiscountCode.value.trim();
+  if(discount.toUpperCase()==="DISCOUNT10"){finalPrice=(currentPrice*0.9).toFixed(2);}
+  form.querySelector('#price').value=finalPrice;
 
-  fetch(form.action,{method: form.method, body: new FormData(form), headers:{'Accept':'application/json'}})
-    .then(response=>{
-      if(response.ok){
+  fetch(form.action,{method:form.method,body:new FormData(form),headers:{'Accept':'application/json'}})
+    .then(resp=>{
+      if(resp.ok){
         closeForm();
-        alert(`Поръчката ви е направена успешно! Продукт: ${form.Product.value}, цена: ${finalPrice} €. Ще се свържем с вас възможно най-свoрo.`);
+        alert(`Поръчката ви е направена успешно! Продукт: ${form.Product.value}, цена: ${finalPrice} €. Ще се свържем с вас възможно най-скоро.`);
         form.reset();
-      } else {alert("Възникна грешка. Моля, опитайте отново.");}
-    }).catch(error=>{alert("Възникна грешка. Моля, опитайте отново.");});
+      }else{alert("Възникна грешка. Моля, опитайте отново.");}
+    }).catch(err=>{alert("Възникна грешка. Моля, опитайте отново.");});
   return false;
 }
 
@@ -224,7 +206,7 @@ canvas.width=window.innerWidth; canvas.height=window.innerHeight;
 const particles=[];
 const colors=['#ff00cc','#8e24aa','#d500f9','#673ab7'];
 for(let i=0;i<150;i++){
-  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, dx:(Math.random()-0.5)*1.2, dy:(Math.random()-0.5)*1.2, color: colors[Math.floor(Math.random()*colors.length)]});
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, dx:(Math.random()-0.5)*1.2, dy:(Math.random()-0.5)*1.2, color:colors[Math.floor(Math.random()*colors.length)]});
 }
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -238,6 +220,12 @@ function animate(){
 }
 animate();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+
+// Favicon с името на сайта
+const favicon = document.createElement('link');
+favicon.rel = 'icon';
+favicon.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="24" font-size="24">🧠</text></svg>';
+document.head.appendChild(favicon);
 </script>
 
 </body>
