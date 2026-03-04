@@ -34,6 +34,7 @@ body {
   padding:5px 10px;
   border-radius:10px;
   font-weight:bold;
+  cursor:pointer;
 }
 /* Products grid */
 .products{
@@ -144,13 +145,43 @@ body {
   0%{transform: translateY(0) translateX(0);}
   100%{transform: translateY(100vh) translateX(50px);}
 }
+.cart-dropdown{
+  position:absolute;
+  right:40px;
+  top:70px;
+  background:rgba(0,0,0,0.9);
+  border:1px solid #ff006e;
+  border-radius:10px;
+  width:300px;
+  max-height:400px;
+  overflow-y:auto;
+  display:none;
+  padding:10px;
+  z-index:1000;
+}
+.cart-dropdown h3{
+  margin:0 0 10px 0;
+  text-align:center;
+}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  border-bottom:1px solid #444;
+  padding-bottom:5px;
+}
 </style>
 </head>
 <body>
 
 <div class="header">
   Brainrot Store BG
-  <div>🛒 <span id="cartCount">0</span></div>
+  <div class="cart-count" onclick="toggleCart()">🛒 <span id="cartCount">0</span></div>
+  <div class="cart-dropdown" id="cartDropdown">
+    <h3>Количка</h3>
+    <div id="cartItems"></div>
+    <button class="button" onclick="checkout()">Поръчай</button>
+  </div>
 </div>
 
 <div class="products" id="home">
@@ -215,11 +246,11 @@ let currentPrice=0;
 let cartCount=0;
 let snowActive=false;
 let unitPrice = 0;
+let cart=[];
 
 function openProduct(name,speed,price,effect){
   document.getElementById('home').style.display="none";
   document.getElementById('productPage').style.display="block";
-
   document.getElementById('productName').innerText=name;
   document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
 
@@ -227,10 +258,7 @@ function openProduct(name,speed,price,effect){
   const imgPath = "images/" + name.replace(/\s/g,"_") + ".webp";
   productImg.style.display = "none"; 
   const imgTest = new Image();
-  imgTest.onload = () => {
-      productImg.src = imgPath;
-      productImg.style.display = "block"; 
-  };
+  imgTest.onload = () => { productImg.src = imgPath; productImg.style.display = "block"; };
   imgTest.onerror = () => { productImg.style.display = "none"; };
   imgTest.src = imgPath;
 
@@ -238,27 +266,14 @@ function openProduct(name,speed,price,effect){
   const badge2=document.getElementById('productBadge2');
   badge1.style.display='none';
   badge2.style.display='none';
+  if(effect==='rainbow-secret'){ badge1.style.display='block'; badge1.innerText="SECRET"; badge2.style.display='block'; badge2.innerText="RAINBOW"; }
+  else if(effect==='rainbow'){ badge2.style.display='block'; badge2.innerText="RAINBOW"; }
+  else{ badge1.style.display='block'; badge1.innerText="SECRET"; }
 
-  if(effect==='rainbow-secret'){
-    badge1.style.display='block';
-    badge1.innerText="SECRET";
-    badge2.style.display='block';
-    badge2.innerText="RAINBOW";
-  } else if(effect==='rainbow'){
-    badge2.style.display='block';
-    badge2.innerText="RAINBOW";
-  } else{
-    badge1.style.display='block';
-    badge1.innerText="SECRET";
-  }
-
-  // Сетваме unitPrice за този продукт
   unitPrice = price;
-
   document.getElementById('p1').innerText=price+" €";
   document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
   document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
-
   currentPrice = price;
   document.getElementById("finalPrice").innerText="Общо: "+currentPrice.toFixed(2)+" €";
 
@@ -277,18 +292,8 @@ function openProduct(name,speed,price,effect){
   }
 }
 
-function removeSnow(){
-  if(snowActive){
-    document.querySelectorAll('.snowflake').forEach(f=>f.remove());
-    snowActive=false;
-  }
-}
-
-function goHome(){
-  document.getElementById('productPage').style.display="none";
-  document.getElementById('home').style.display="flex";
-  removeSnow();
-}
+function removeSnow(){ if(snowActive){ document.querySelectorAll('.snowflake').forEach(f=>f.remove()); snowActive=false; } }
+function goHome(){ document.getElementById('productPage').style.display="none"; document.getElementById('home').style.display="flex"; removeSnow(); }
 
 function selectPackage(qty,element){
   document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
@@ -300,9 +305,34 @@ function selectPackage(qty,element){
 }
 
 function addToCart(){
-  cartCount++;
+  const productName = document.getElementById('productName').innerText;
+  cart.push({name: productName, price: currentPrice});
+  cartCount = cart.length;
   document.getElementById('cartCount').innerText=cartCount;
-  alert("Продуктът е добавен в количката! Ще се свържем с вас възможно най-скоро.");
+  updateCartDropdown();
+}
+
+function toggleCart(){
+  const cartDropdown = document.getElementById('cartDropdown');
+  cartDropdown.style.display = (cartDropdown.style.display==='block')?'none':'block';
+}
+
+function updateCartDropdown(){
+  const cartItems = document.getElementById('cartItems');
+  cartItems.innerHTML = '';
+  cart.forEach((item,index)=>{
+    const div = document.createElement('div');
+    div.className='cart-item';
+    div.innerHTML = `<span>${item.name}</span><span>${item.price.toFixed(2)} €</span>`;
+    cartItems.appendChild(div);
+  });
+}
+
+function checkout(){
+  if(cart.length===0) { alert("Количката е празна!"); return; }
+  let total = cart.reduce((sum,item)=>sum+item.price,0);
+  alert("Обща сума: " + total.toFixed(2) + " €\nСлед това ще се свържем с вас за данните за поръчката.");
+  cart=[]; cartCount=0; document.getElementById('cartCount').innerText=cartCount; updateCartDropdown(); 
 }
 </script>
 </body>
