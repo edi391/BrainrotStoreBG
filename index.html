@@ -29,6 +29,13 @@ body {
   font-size:22px;
   font-weight:bold;
 }
+/* Cart badge */
+.cart-count{
+  background:#ff006e;
+  padding:5px 10px;
+  border-radius:10px;
+  font-weight:bold;
+}
 /* Products grid */
 .products{
   display:flex;
@@ -57,12 +64,12 @@ body {
 }
 /* Badges */
 .badge{
-  position:absolute;
-  left:15px;
+  display:inline-block;
   padding:5px 10px;
   border-radius:8px;
   font-size:12px;
   font-weight:bold;
+  margin-bottom:15px;
 }
 .secret{background:#ff006e;}
 .rainbow{
@@ -80,7 +87,6 @@ body {
 .product-page{
   display:none;
   padding:40px;
-  position:relative;
 }
 .product-layout{
   display:flex;
@@ -90,6 +96,7 @@ body {
 .product-img{
   width:350px;
   border-radius:15px;
+  display:block; /* няма повече празни img под него */
 }
 /* Package */
 .package{
@@ -163,7 +170,7 @@ body {
   </div>
   <div class="card" onclick="openProduct('Dragon Cannelloni',2500,150,'rainbow-secret')">
     <div class="badge secret">SECRET</div>
-    <div class="badge rainbow">RAINBOW</div>
+    <div class="badge rainbow" style="margin-top:15px;">RAINBOW</div>
     <img src="images/Nah_uh.webp" alt="">
     <h2>Dragon Cannelloni</h2>
     <div class="speed">2.5B/s</div>
@@ -173,12 +180,10 @@ body {
 <!-- PRODUCT PAGE -->
 <div class="product-page" id="productPage">
 <button class="button" onclick="goHome()">← Назад</button>
-
 <div class="product-layout">
 <div>
-<!-- Бейджовете под бутона "← Назад" -->
-<div class="badge secret" id="productBadge1" style="top:80px;"></div>
-<div class="badge rainbow" id="productBadge2" style="top:115px;"></div>
+<div class="badge secret" id="productBadge1" style="margin-top:25px;"></div>
+<div class="badge rainbow" id="productBadge2" style="margin-top:10px;"></div>
 <img src="" class="product-img" id="productImg">
 </div>
 <div>
@@ -193,7 +198,6 @@ body {
 <button class="button" onclick="addToCart()">Добави в количката</button>
 </div>
 </div>
-
 <div class="info">
 <h3>Как ще получите вашия Brainrot?</h3>
 <p>
@@ -287,6 +291,5 @@ function addToCart(){
   alert("Продуктът е добавен в количката! Ще се свържем с вас възможно най-скоро.");
 }
 </script>
-
 </body>
 </html>
