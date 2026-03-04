@@ -4,219 +4,302 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brainrot Store BG</title>
-
-<!-- favicon -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='24' font-size='24'>🧠</text></svg>">
-
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(-45deg,#0f0c29,#512da8,#673ab7,#311b92);
-  background-size:400% 400%;
-  animation: gradientBG 12s ease infinite;
-  color: #fff;
-  overflow-x: hidden;
-}
-@keyframes gradientBG {
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0f0f1a;
+  color: white;
 }
 
-/* HEADER */
+/* Header */
 .header {
-  background: rgba(0,0,0,0.6);
-  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-.header h1 { margin: 0; font-size: 28px; }
-.header .cart-icon { cursor: pointer; font-size: 24px; }
-.header .cart-icon span {
-  background: #ff3366; padding: 2px 8px; border-radius: 12px;
-  margin-left: 5px; font-size: 14px; vertical-align: top;
+  padding: 20px 40px;
+  background: #111;
+  font-size: 22px;
+  font-weight: bold;
 }
 
-/* PRODUCTS */
+/* Products grid */
 .products {
-  padding: 25px;
-  display: grid;
+  display: flex;
   gap: 30px;
-  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  padding: 40px;
+  flex-wrap: wrap;
 }
+
+/* Product card */
 .card {
-  background: rgba(255,255,255,0.15);
-  border-radius: 18px;
-  padding: 15px;
+  background: #1a1a2e;
+  padding: 20px;
+  border-radius: 15px;
+  width: 260px;
+  cursor: pointer;
   transition: 0.3s;
-  text-align: center;
+  position: relative;
 }
-.card:hover { transform: translateY(-8px); box-shadow:0 8px 20px rgba(255,255,255,0.3); }
-.card img { width: 100%; border-radius: 15px; }
-.card h2 { margin:10px 0 5px; font-size:20px; }
-.card p { margin:5px 0; font-size:18px; }
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 20px #7b2cbf;
+}
 
-/* BUTTONS */
+/* Badge */
+.badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+/* SECRET badge */
+.secret { background:#ff006e; }
+
+/* RAINBOW badge animation */
+.rainbow {
+  background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 400%;
+  animation: rainbowMove 4s linear infinite;
+}
+@keyframes rainbowMove {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* Speed text */
+.speed {
+  margin-top:8px;
+  color:#aaa;
+  font-size:14px;
+}
+
+/* Product page */
+.product-page {
+  display: none;
+  padding: 40px;
+}
+
+.product-layout {
+  display:flex;
+  gap:50px;
+  flex-wrap:wrap;
+}
+
+.product-img {
+  width:350px;
+  border-radius:15px;
+}
+
+/* Package selector */
+.package {
+  border:1px solid #444;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.package:hover { border-color:#9d4edd; }
+.selected { border-color:#ff006e; background:#1f1f3d; }
+
+.price { font-size:24px; margin-top:15px; }
+
+/* Buttons */
 .button {
-  padding:12px 25px;
-  border:none; border-radius:25px;
-  background:linear-gradient(45deg,#8e24aa,#d500f9);
-  cursor:pointer; font-size:16px; color:#fff;
+  background:#9d4edd;
+  border:none;
+  padding:15px 25px;
+  border-radius:10px;
+  color:white;
+  cursor:pointer;
+  margin-top:15px;
+  font-size:16px;
 }
-.button:hover {
-  transform:scale(1.05);
-  background:linear-gradient(45deg,#d500f9,#ff00cc);
+.button:hover { background:#c77dff; }
+
+/* Info box */
+.info {
+  margin-top:40px;
+  background:#141427;
+  padding:20px;
+  border-radius:15px;
 }
 
-/* POPUPS */
-.popup, #cartPopup {
-  display:none;
-  position:fixed;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  background: rgba(20,20,20,0.95);
-  border-radius:20px;
-  padding:25px;
-  max-width:500px;
-  width:90%;
-  z-index:1001;
-  box-shadow:0 0 20px rgba(255,255,255,0.3);
+/* Snow effect for Cooki and Milki */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: #fff;
+  font-size: 1em;
+  user-select: none;
+  z-index: 9999;
+  pointer-events: none;
+  animation-name: fall;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
-#cartPopup table, #cartPopup th, #cartPopup td {
-  width:100%; border-collapse:collapse;
-  border:1px solid #fff; padding:8px; text-align:left;
+@keyframes fall {
+  0% {transform: translateY(0) translateX(0);}
+  100% {transform: translateY(100vh) translateX(50px);}
 }
-#cartPopup th { background: rgba(255,255,255,0.2); }
-.popup input { width:90%; margin:8px 0; padding:10px; border-radius:8px; border:none; font-size:16px; }
-.checkbox-container {
-  display:flex; align-items:center; gap:5px; margin:10px 0; font-size:14px; color:#fff;
-}
-.checkbox-container input[type="checkbox"] { width:auto; height:auto; margin:0; }
-.checkbox-container label { margin:0; }
-.popup .close, #cartPopup .close { background:#b71c1c; }
-
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <h1>Brainrot Store BG</h1>
-  <div class="cart-icon" onclick="openCart()">🛒 <span id="cartCount">0</span></div>
+Brainrot Store BG
+<div>🛒 0</div>
 </div>
 
 <!-- PRODUCTS -->
-<div class="products">
-  <div class="card">
-    <img src="images/Garamadundung.webp" alt="Garamadundung">
-    <h2>Garama and Madundung</h2>
-    <p>Цена: 10 €</p>
-    <button class="button" onclick="addToCart('Garamadundung',10)">Добави в кошницата</button>
-  </div>
-  <div class="card">
-    <img src="images/Cooki_and_milki.webp" alt="Cooki and Milki">
-    <h2>Cooki and Milki</h2>
-    <p>Цена: 20 €</p>
-    <button class="button" onclick="addToCart('Cooki and Milki',20)">Добави в кошницата</button>
-  </div>
-  <div class="card">
-    <img src="images/Nah_uh.webp" alt="Nah uh">
-    <h2>Dragon Cannelloni (Rainbow)</h2>
-    <p>Цена: 150 €</p>
-    <button class="button" onclick="addToCart('Nah uh',150)">Добави в кошницата</button>
-  </div>
+<div class="products" id="home">
+
+<div class="card" onclick="openProduct('Garama and Madundung', 50, 10)">
+<div class="badge secret">SECRET</div>
+<img src="images/Garamadundung.webp" width="100%">
+<h2>Garama and Madundung</h2>
+<div class="speed">50M/s</div>
 </div>
 
-<!-- CART POPUP -->
-<div id="cartPopup">
-  <h2>Вашата кошница</h2>
-  <table id="cartTable"><tr><th>Продукт</th><th>Цена</th><th></th></tr></table>
-  <p><strong>Общо: </strong><span id="cartTotal">0</span> €</p>
-  <button class="button" onclick="openOrderForm()">Поръчай</button>
-  <button class="button close" onclick="closeCart()">Затвори</button>
+<div class="card" onclick="openProduct('Cooki and Milki', 465, 20,'snow')">
+<div class="badge secret">SECRET</div>
+<img src="images/Cooki_and_milki.webp" width="100%">
+<h2>Cooki and Milki</h2>
+<div class="speed">465M/s</div>
 </div>
 
-<!-- ORDER FORM POPUP -->
-<div id="orderForm" class="popup">
-  <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return handleOrderSubmit(event)">
-    <h2>Данни за поръчка</h2>
-    <input type="hidden" id="Products" name="Products">
-    <input type="text" name="FirstName" placeholder="Име" required>
-    <input type="text" name="LastName" placeholder="Фамилия" required>
-    <input type="email" name="Email" placeholder="Имейл" required>
-    <input type="text" name="Phone" placeholder="Телефонен номер" required>
-    <input type="text" name="DiscountCode" placeholder="Код за отстъпка (по избор)">
-    <div class="checkbox-container">
-      <input type="checkbox" name="Terms" required>
-      <label>Съгласен съм с общите условия на Brainrot Store BG</label>
-    </div>
-    <button type="submit" class="button">Изпрати поръчката</button>
-    <button type="button" class="button close" onclick="closeOrderForm()">Назад</button>
-  </form>
+<div class="card" onclick="openProduct('Dragon Cannelloni', 2500, 150,'rainbow')">
+<div class="badge rainbow">RAINBOW</div>
+<img src="images/Nah_uh.webp" width="100%">
+<h2>Dragon Cannelloni</h2>
+<div class="speed">2.5B/s</div>
+</div>
+
+</div>
+
+<!-- PRODUCT PAGE -->
+<div class="product-page" id="productPage">
+<button class="button" onclick="goHome()">← Назад</button>
+
+<div class="product-layout">
+<div>
+<div class="badge" id="productBadge"></div>
+<img src="" class="product-img" id="productImg">
+</div>
+
+<div>
+<h1 id="productName"></h1>
+<div class="speed" id="productSpeed"></div>
+<p>Наличност: В наличност</p>
+
+<h3>Избери пакет:</h3>
+
+<div class="package selected" onclick="selectPackage(1,1,this)">
+<b>1 брой</b><br>
+<span class="package-price" id="p1"></span>
+</div>
+
+<div class="package" onclick="selectPackage(2,2,this)">
+<b>2 броя</b><br>
+<span class="package-price" id="p2"></span>
+</div>
+
+<div class="package" onclick="selectPackage(5,5,this)">
+<b>5 броя</b><br>
+<span class="package-price" id="p5"></span>
+</div>
+
+<div class="price" id="finalPrice"></div>
+
+<button class="button">Добави в количката</button>
+
+</div>
+</div>
+
+<div class="info">
+<h3>Как ще получите вашия Brainrot?</h3>
+<p>
+След като направите поръчката, ще се свържем с вас по телефона, който сте посочили.
+Ще получите достъп до наш частен Roblox сървър, където ще можете да вземете
+вашия Brainrot директно от нашата база.
+</p>
+<p>
+Не изискваме Discord тикети или предоставяне на акаунт информация.
+Получавате продукта в същия ден, в който сте направили поръчката.
+Бързо, лесно и сигурно.
+</p>
 </div>
 
 <script>
-let cart = [];
+let currentPrice = 0;
+let snowActive = false;
 
-function updateCartCount(){ document.getElementById('cartCount').textContent = cart.length; }
+function openProduct(name, speed, price, effect){
+  document.getElementById('home').style.display="none";
+  document.getElementById('productPage').style.display="block";
 
-function addToCart(name, price){
-  let displayName=name;
-  if(name==="Garamadundung") displayName="Garama and Madundung";
-  if(name==="Nah uh") displayName="Dragon Cannelloni (Rainbow)";
-  cart.push({name:displayName, price});
-  updateCartCount();
+  document.getElementById('productName').innerText=name;
+  document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
+  document.getElementById('productImg').src="images/" + name.replace(/\s/g,"_") + ".webp";
+
+  const badge=document.getElementById('productBadge');
+  if(effect==='rainbow'){
+    badge.innerText="RAINBOW";
+    badge.className="badge rainbow";
+  } else {
+    badge.innerText="SECRET";
+    badge.className="badge secret";
+  }
+
+  // Set package prices dynamically
+  document.getElementById('p1').innerText=price+" €";
+  document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
+  document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
+
+  currentPrice=price;
+
+  // Snow effect for Cooki and Milki
+  removeSnow();
+  if(effect==='snow'){
+    snowActive=true;
+    for(let i=0;i<30;i++){
+      let flake=document.createElement('div');
+      flake.className='snowflake';
+      flake.style.left=Math.random()*100+'vw';
+      flake.style.fontSize=(Math.random()*10+10)+'px';
+      flake.innerText='❄';
+      flake.style.animationDuration=(Math.random()*3+3)+'s';
+      document.body.appendChild(flake);
+    }
+  }
 }
 
-function openCart(){ document.getElementById('cartPopup').style.display='block'; renderCart(); }
-function closeCart(){ document.getElementById('cartPopup').style.display='none'; }
-
-function renderCart(){
-  const table=document.getElementById('cartTable');
-  table.innerHTML='<tr><th>Продукт</th><th>Цена</th><th></th></tr>';
-  let total=0;
-  cart.forEach((item,index)=>{
-    total+=item.price;
-    const row=table.insertRow();
-    row.insertCell(0).textContent=item.name;
-    row.insertCell(1).textContent=item.price+' €';
-    const btn=document.createElement('button');
-    btn.textContent='X';
-    btn.className='button close';
-    btn.onclick=()=>{cart.splice(index,1); renderCart(); updateCartCount();};
-    row.insertCell(2).appendChild(btn);
-  });
-  document.getElementById('cartTotal').textContent=total.toFixed(2);
+function removeSnow(){
+  if(snowActive){
+    document.querySelectorAll('.snowflake').forEach(f=>f.remove());
+    snowActive=false;
+  }
 }
 
-function openOrderForm(){
-  closeCart();
-  document.getElementById('Products').value=JSON.stringify(cart);
-  document.getElementById('orderForm').style.display='block';
+function goHome(){
+  document.getElementById("productPage").style.display="none";
+  document.getElementById("home").style.display="flex";
+  removeSnow();
 }
-function closeOrderForm(){ document.getElementById('orderForm').style.display='none'; }
 
-function handleOrderSubmit(event){
-  event.preventDefault();
-  const form=document.getElementById('orderFormElement');
-  fetch(form.action,{method:form.method, body:new FormData(form), headers:{'Accept':'application/json'}})
-  .then(resp=>{
-    if(resp.ok){
-      closeOrderForm();
-      cart=[];
-      updateCartCount();
-      alert("Поръчката е изпратена! Ще се свържем с вас възможно най-скоро.");
-      form.reset();
-    } else alert("Грешка! Моля опитайте пак.");
-  });
-  return false;
+function selectPackage(qty,price,element){
+  document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
+  element.classList.add("selected");
+  currentPrice=price;
+  document.getElementById("finalPrice").innerText="Общо: "+price+" €";
 }
 </script>
-
 </body>
 </html>
