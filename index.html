@@ -67,7 +67,6 @@ body {margin:0; font-family: Arial, Helvetica, sans-serif; color:white; backgrou
   </div>
 </div>
 
-<!-- PRODUCT PAGE -->
 <div class="product-page" id="productPage">
 <button class="button" onclick="goHome()">← Назад</button>
 <div class="product-layout">
@@ -89,7 +88,6 @@ body {margin:0; font-family: Arial, Helvetica, sans-serif; color:white; backgrou
 </div>
 </div>
 
-<!-- CART MENU -->
 <div class="cart-menu" id="cartMenu">
 <div id="cartItems"></div>
 <button class="button" onclick="checkout()">Поръчай</button>
@@ -120,36 +118,41 @@ body {margin:0; font-family: Arial, Helvetica, sans-serif; color:white; backgrou
 </div>
 
 <script>
-let currentPrice=0;
-let selectedQty=1;
-let cartCount=0;
-let cart=[];
+let basePrice = 0;
+let currentPrice = 0;
+let selectedQty = 1;
+let cartCount = 0;
+let cart = [];
 
 function openProduct(name,speed,price,effect){
   document.getElementById('home').style.display="none";
   document.getElementById('productPage').style.display="block";
   document.getElementById('productName').innerText=name;
   document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
-  const productImg = document.getElementById('productImg');
-  productImg.src="images/" + name.replace(/\s/g,"_") + ".webp";
+  document.getElementById('productImg').src="images/" + name.replace(/\s/g,"_") + ".webp";
+
+  basePrice = price;
+  selectedQty = 1;
+  currentPrice = basePrice;
+
+  document.getElementById('p1').innerText = basePrice + " €";
+  document.getElementById('p2').innerText = (basePrice*2*0.95).toFixed(2)+" € (-5%)";
+  document.getElementById('p5').innerText = (basePrice*5*0.9).toFixed(2)+" € (-10%)";
+  document.getElementById("finalPrice").innerText="Общо: "+currentPrice.toFixed(2)+" €";
+
   const badge1=document.getElementById('productBadge1');
   const badge2=document.getElementById('productBadge2');
   badge1.style.display='none'; badge2.style.display='none';
   if(effect==='rainbow-secret'){ badge1.style.display='block'; badge1.innerText="SECRET"; badge2.style.display='block'; badge2.innerText="RAINBOW"; }
   else if(effect==='rainbow'){ badge2.style.display='block'; badge2.innerText="RAINBOW"; }
   else{ badge1.style.display='block'; badge1.innerText="SECRET"; }
-
-  document.getElementById('p1').innerText=price+" €";
-  document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
-  document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
-  currentPrice=price; selectedQty=1;
 }
 
 function selectPackage(qty,price,element){
   document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
   element.classList.add("selected");
   selectedQty = qty;
-  currentPrice = qty===1 ? price : qty===2 ? (price*2*0.95) : (price*5*0.9);
+  currentPrice = qty===1 ? basePrice : qty===2 ? basePrice*2*0.95 : basePrice*5*0.9;
   document.getElementById("finalPrice").innerText="Общо: "+currentPrice.toFixed(2)+" €";
 }
 
@@ -191,7 +194,6 @@ function submitOrder(){
   const phone = document.getElementById('phone').value;
   const agree = document.getElementById('agree').checked;
   if(!name || !email || !phone || !agree){ alert("Моля, попълнете всички полета и се съгласете с условията."); return;}
-  // Тук можеш да добавиш backend или mailto
   alert("Поръчката е изпратена! Ще се свържем с вас възможно най-скоро.");
   cart=[]; cartCount=0; document.getElementById('cartCount').innerText=cartCount;
   document.getElementById('cartItems').innerHTML="";
