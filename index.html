@@ -86,6 +86,7 @@ body {
 .product-page{
   display:none;
   padding:40px;
+  position:relative;
 }
 .product-layout{
   display:flex;
@@ -95,7 +96,6 @@ body {
 .product-img{
   width:350px;
   border-radius:15px;
-  display:none; /* махаме празната картинка при липса на файл */
 }
 /* Package */
 .package{
@@ -156,20 +156,20 @@ body {
 
 <div class="products" id="home">
   <div class="card" onclick="openProduct('Garama and Madundung',50,10)">
-    <div class="badge secret" style="top:35px;">SECRET</div>
+    <div class="badge secret" style="top:50px;">SECRET</div>
     <img src="images/Garamadundung.webp" alt="">
     <h2>Garama and Madundung</h2>
     <div class="speed">50M/s</div>
   </div>
   <div class="card" onclick="openProduct('Cooki and Milki',465,20,'snow')">
-    <div class="badge secret" style="top:35px;">SECRET</div>
+    <div class="badge secret" style="top:50px;">SECRET</div>
     <img src="images/Cooki_and_milki.webp" alt="">
     <h2>Cooki and Milki</h2>
     <div class="speed">465M/s</div>
   </div>
   <div class="card" onclick="openProduct('Dragon Cannelloni',2500,150,'rainbow-secret')">
-    <div class="badge secret" id="dragonSecret" style="top:35px;">SECRET</div>
-    <div class="badge rainbow" style="top:65px;" id="dragonRainbow">RAINBOW</div>
+    <div class="badge secret" style="top:50px;" id="dragonSecret">SECRET</div>
+    <div class="badge rainbow" style="top:80px;" id="dragonRainbow">RAINBOW</div>
     <img src="images/Nah_uh.webp" alt="">
     <h2>Dragon Cannelloni</h2>
     <div class="speed">2.5B/s</div>
@@ -181,9 +181,8 @@ body {
 <button class="button" onclick="goHome()">← Назад</button>
 <div class="product-layout">
 <div>
-<div class="badge secret" id="productBadge1" style="top:40px;"></div>
-<div class="badge rainbow" id="productBadge2" style="top:70px;"></div>
-<img src="" class="product-img" id="productImg">
+<div class="badge secret" id="productBadge1" style="top:50px;"></div>
+<div class="badge rainbow" id="productBadge2" style="top:80px;"></div>
 </div>
 <div>
 <h1 id="productName"></h1>
@@ -197,6 +196,7 @@ body {
 <button class="button" onclick="addToCart()">Добави в количката</button>
 </div>
 </div>
+
 <div class="info">
 <h3>Как ще получите вашия Brainrot?</h3>
 <p>
@@ -223,11 +223,6 @@ function openProduct(name,speed,price,effect){
   document.getElementById('productName').innerText=name;
   document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
 
-  const productImg = document.getElementById('productImg');
-  const imgPath = "images/" + name.replace(/\s/g,"_") + ".webp";
-  productImg.src = imgPath;
-  productImg.style.display="block";
-
   const badge1=document.getElementById('productBadge1');
   const badge2=document.getElementById('productBadge2');
   badge1.style.display='none';
@@ -246,11 +241,13 @@ function openProduct(name,speed,price,effect){
     badge1.innerText="SECRET";
   }
 
+  // Package prices
   document.getElementById('p1').innerText=price+" €";
   document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
   document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
   currentPrice=price;
 
+  // Snow effect
   removeSnow();
   if(effect==='snow'){
     snowActive=true;
@@ -292,5 +289,6 @@ function addToCart(){
   alert("Продуктът е добавен в количката! Ще се свържем с вас възможно най-скоро.");
 }
 </script>
+
 </body>
 </html>
