@@ -5,180 +5,239 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brainrot Store BG</title>
 <style>
-/* 💜 Градиент фон + анимация */
+/* 💜 Основен фон + gradient + анимация */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(-45deg, #0f0c29, #512da8, #673ab7, #311b92);
-  background-size: 400% 400%;
-  animation: gradient 12s ease infinite;
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
   color: white;
   text-align: center;
+  background: linear-gradient(-45deg, #0f0c29, #512da8, #673ab7, #311b92);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
 }
-@keyframes gradient {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
 }
 
-/* 🧠 Заглавие */
+/* Canvas за частици */
+#bgCanvas {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-1;
+}
+
+/* Заглавие */
 h1 {
   padding: 30px;
-  font-size: 44px;
-  text-shadow: 2px 2px 5px #000;
+  font-size: 48px;
+  text-shadow: 2px 2px 8px #000;
 }
 
-/* 📦 Грид за продуктите */
+/* Грид за продуктите */
 .products {
   display: grid;
   gap: 30px;
   padding: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* 📇 Продуктова карта */
+/* Продуктова карта */
 .card {
   background: rgba(255,255,255,0.12);
   border-radius: 20px;
-  padding: 15px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  padding: 20px;
+  transition: transform 0.4s, box-shadow 0.4s;
+  cursor: pointer;
 }
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 20px rgba(255,255,255,0.3);
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(255,255,255,0.3);
 }
 
-/* 📸 Снимки */
+/* Снимки */
 .product-img {
   width: 100%;
   border-radius: 15px;
-  transition: scale 0.3s;
+  transition: transform 0.4s;
 }
 .card:hover .product-img {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 
-/* 🟣 Бутон */
+/* Бутон */
 .button {
   padding: 12px 25px;
   margin-top: 10px;
   font-size: 16px;
   border: none;
   border-radius: 25px;
-  background: #8e24aa;
+  background: linear-gradient(45deg, #8e24aa, #d500f9);
   color: white;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: transform 0.2s, background 0.3s;
 }
 .button:hover {
-  background: #d500f9;
   transform: scale(1.05);
+  background: linear-gradient(45deg, #d500f9, #ff00cc);
 }
 
-/* 📩 Popup форма */
+/* Popup форма */
 .popup {
   display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #222;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background: rgba(30,30,30,0.95);
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 0 15px rgba(255,255,255,0.4);
-  width: 90%;
-  max-width: 400px;
+  width: 95%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  text-align: left;
 }
-.popup input {
+.popup h2 {
+  text-align:center;
+  margin-bottom:20px;
+}
+.popup input, .popup button {
   width: 90%;
-  padding: 10px;
-  margin: 8px;
-  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 12px;
   border: none;
+  font-size: 16px;
+}
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #fff;
+  margin: 10px 0;
+}
+.checkbox-container input {
+  width:auto;
 }
 .popup .close {
   background: #b71c1c;
-  margin-top: 10px;
+}
+
+/* Мобилна оптимизация */
+@media(max-width:600px){
+  h1{font-size:36px;}
+  .products{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
+<canvas id="bgCanvas"></canvas>
+
 <h1>Brainrot Store BG</h1>
 
 <div class="products">
-  <!-- Продукт 1 -->
-  <div class="card">
+  <div class="card" onclick="openForm('Garamadundung',10)">
     <img src="images/Garamadundung.webp" class="product-img" alt="Garamadundung">
-    <h2>Garamadundung</h2>
+    <h2>Garama and Madundung</h2>
     <p>Цена: 10 €</p>
-    <button class="button" onclick="openForm('Garamadundung')">Поръчай</button>
+    <button class="button">Поръчай</button>
   </div>
-  <!-- Продукт 2 -->
-  <div class="card">
+
+  <div class="card" onclick="openForm('Cooki and Milki',20)">
     <img src="images/Cooki_and_milki.webp" class="product-img" alt="Cooki and Milki">
     <h2>Cooki and Milki</h2>
     <p>Цена: 20 €</p>
-    <button class="button" onclick="openForm('Cooki and Milki')">Поръчай</button>
+    <button class="button">Поръчай</button>
   </div>
-  <!-- Продукт 3 -->
-  <div class="card">
+
+  <div class="card" onclick="openForm('Nah uh',150)">
     <img src="images/Nah_uh.webp" class="product-img" alt="Nah uh">
-    <h2>Nah uh</h2>
+    <h2>Dragon Cannelloni (Rainbow)</h2>
     <p>Цена: 150 €</p>
-    <button class="button" onclick="openForm('Nah uh')">Поръчай</button>
+    <button class="button">Поръчай</button>
   </div>
 </div>
 
-<!-- 📩 Popup форма за поръчки -->
 <div id="orderForm" class="popup">
   <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return showConfirmation(event)">
-    <h2>Поръчка:</h2>
+    <h2>Данни за поръчка</h2>
     <input type="hidden" id="prod" name="Product">
-    <input type="text" name="FullName" placeholder="Име и фамилия" required>
+    <input type="hidden" id="price" name="Price">
+    <input type="text" name="FirstName" placeholder="Име" required>
+    <input type="text" name="LastName" placeholder="Фамилия" required>
+    <input type="email" name="Email" placeholder="Имейл" required>
     <input type="text" name="Phone" placeholder="Телефонен номер" required>
-    <button type="submit" class="button">Изпрати</button>
-    <button type="button" class="button close" onclick="closeForm()">Отказ</button>
+    <input type="text" name="DiscountCode" placeholder="Код за отстъпка (по избор)">
+    <div class="checkbox-container">
+      <input type="checkbox" name="Terms" required>
+      <label>Съгласен съм с общите условия и политиката за поверителност на Brainrot Store BG</label>
+    </div>
+    <button type="submit" class="button">Премини към плащане</button>
+    <button type="button" class="button close" onclick="closeForm()">Назад към продуктите</button>
   </form>
 </div>
 
 <script>
-function openForm(name) {
+// Popup форма
+let currentPrice = 0;
+function openForm(name, price){
   document.getElementById('prod').value = name;
+  document.getElementById('price').value = price;
+  currentPrice = price;
   document.getElementById('orderForm').style.display = 'block';
 }
-
-// Затваряне на popup
-function closeForm() {
+function closeForm(){
   document.getElementById('orderForm').style.display = 'none';
 }
 
-// След изпращане на формата, показваме съобщение на сайта
-function showConfirmation(event) {
-  event.preventDefault(); // спираме default submit, за да покажем съобщението
+// Потвърждение при submit + код за отстъпка
+function showConfirmation(event){
+  event.preventDefault();
   const form = document.getElementById('orderFormElement');
+  const discountInput = form.DiscountCode.value.trim();
+  let finalPrice = currentPrice;
+  if(discountInput.toUpperCase()==="DISCOUNT10"){finalPrice=(currentPrice*0.9).toFixed(2);}
+  form.querySelector('#price').value = finalPrice;
 
-  // Пращаме реално формата към Formspree
-  fetch(form.action, {
-    method: form.method,
-    body: new FormData(form),
-    headers: {
-      'Accept': 'application/json'
-    }
-  }).then(response => {
-    if (response.ok) {
-      closeForm();
-      alert("Поръчката ви е направена успешно! Ще се свържем с вас в рамките на 1 работен час.");
-      form.reset();
-    } else {
-      alert("Възникна грешка. Моля, опитайте отново.");
-    }
-  }).catch(error => {
-    alert("Възникна грешка. Моля, опитайте отново.");
-  });
-
+  fetch(form.action,{method: form.method, body: new FormData(form), headers:{'Accept':'application/json'}})
+    .then(response=>{
+      if(response.ok){
+        closeForm();
+        alert(`Поръчката ви е направена успешно! Продукт: ${form.Product.value}, цена: ${finalPrice} €. Ще се свържем с вас възможно най-свoрo.`);
+        form.reset();
+      } else {alert("Възникна грешка. Моля, опитайте отново.");}
+    }).catch(error=>{alert("Възникна грешка. Моля, опитайте отново.");});
   return false;
 }
+
+// Canvas за фон с частици
+const canvas=document.getElementById('bgCanvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+const particles=[];
+const colors=['#ff00cc','#8e24aa','#d500f9','#673ab7'];
+for(let i=0;i<150;i++){
+  particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*3+1, dx:(Math.random()-0.5)*1.2, dy:(Math.random()-0.5)*1.2, color: colors[Math.floor(Math.random()*colors.length)]});
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let p of particles){
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x<0||p.x>canvas.width)p.dx*=-1;
+    if(p.y<0||p.y>canvas.height)p.dy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill();
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 </script>
 
 </body>
