@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brainrot Store BG</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    color: white;
+    text-align: center;
+}
+h1 {
+    padding: 30px;
+    font-size: 40px;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 20px;
+    width: 250px;
+    transition: 0.3s;
+}
+.card:hover {
+    transform: scale(1.05);
+}
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background: #ff00cc;
+    color: white;
+    cursor: pointer;
+}
+form {
+    margin-top: 40px;
+}
+input {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 250px;
+}
+</style>
+</head>
+<body>
+
+<h1>Brainrot Store BG</h1>
+
+<div class="container">
+    <div class="card">
+        <h2>Brainrot Classic</h2>
+        <p>Цена: 10 лв</p>
+        <button onclick="selectProduct('Brainrot Classic')">Поръчай</button>
+    </div>
+
+    <div class="card">
+        <h2>Brainrot Ultra</h2>
+        <p>Цена: 20 лв</p>
+        <button onclick="selectProduct('Brainrot Ultra')">Поръчай</button>
+    </div>
+
+    <div class="card">
+        <h2>Brainrot Legend</h2>
+        <p>Цена: 35 лв</p>
+        <button onclick="selectProduct('Brainrot Legend')">Поръчай</button>
+    </div>
+</div>
+
+<form action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
+    <h2>Поръчка</h2>
+    <input type="hidden" name="Product" id="productInput">
+    <br>
+    <input type="text" name="Username" placeholder="Roblox Username" required>
+    <br>
+    <input type="text" name="Contact" placeholder="Discord / Instagram" required>
+    <br>
+    <button type="submit">Изпрати</button>
+</form>
+
+<script>
+function selectProduct(name){
+    document.getElementById("productInput").value = name;
+    alert("Избран продукт: " + name + ". Попълни формата долу.");
+}
+</script>
+
+</body>
+</html>
