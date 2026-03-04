@@ -189,9 +189,9 @@ body {
 <div class="speed" id="productSpeed"></div>
 <p>Наличност: В наличност</p>
 <h3>Избери пакет:</h3>
-<div class="package selected" onclick="selectPackage(1,10,this)"><b>1 брой</b><br><span id="p1"></span></div>
-<div class="package" onclick="selectPackage(2,10,this)"><b>2 броя</b><br><span id="p2"></span></div>
-<div class="package" onclick="selectPackage(5,10,this)"><b>5 броя</b><br><span id="p5"></span></div>
+<div class="package selected" onclick="selectPackage(1,this)"><b>1 брой</b><br><span id="p1"></span></div>
+<div class="package" onclick="selectPackage(2,this)"><b>2 броя</b><br><span id="p2"></span></div>
+<div class="package" onclick="selectPackage(5,this)"><b>5 броя</b><br><span id="p5"></span></div>
 <div class="price" id="finalPrice"></div>
 <button class="button" onclick="addToCart()">Добави в количката</button>
 </div>
@@ -214,6 +214,7 @@ body {
 let currentPrice=0;
 let cartCount=0;
 let snowActive=false;
+let unitPrice = 0;
 
 function openProduct(name,speed,price,effect){
   document.getElementById('home').style.display="none";
@@ -230,9 +231,7 @@ function openProduct(name,speed,price,effect){
       productImg.src = imgPath;
       productImg.style.display = "block"; 
   };
-  imgTest.onerror = () => {
-      productImg.style.display = "none"; 
-  };
+  imgTest.onerror = () => { productImg.style.display = "none"; };
   imgTest.src = imgPath;
 
   const badge1=document.getElementById('productBadge1');
@@ -253,11 +252,15 @@ function openProduct(name,speed,price,effect){
     badge1.innerText="SECRET";
   }
 
-  // Package prices
+  // Сетваме unitPrice за този продукт
+  unitPrice = price;
+
   document.getElementById('p1').innerText=price+" €";
   document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
   document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
-  currentPrice=price;
+
+  currentPrice = price;
+  document.getElementById("finalPrice").innerText="Общо: "+currentPrice.toFixed(2)+" €";
 
   removeSnow();
   if(effect==='snow'){
@@ -287,7 +290,7 @@ function goHome(){
   removeSnow();
 }
 
-function selectPackage(qty,unitPrice,element){
+function selectPackage(qty,element){
   document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
   element.classList.add("selected");
   if(qty===1) currentPrice = unitPrice;
