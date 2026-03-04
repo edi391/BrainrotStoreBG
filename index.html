@@ -29,12 +29,6 @@ body {
   font-size:22px;
   font-weight:bold;
 }
-.cart-count{
-  background:#ff006e;
-  padding:5px 10px;
-  border-radius:10px;
-  font-weight:bold;
-}
 /* Products grid */
 .products{
   display:flex;
@@ -156,20 +150,20 @@ body {
 
 <div class="products" id="home">
   <div class="card" onclick="openProduct('Garama and Madundung',50,10)">
-    <div class="badge secret" style="top:50px;">SECRET</div>
+    <div class="badge secret">SECRET</div>
     <img src="images/Garamadundung.webp" alt="">
     <h2>Garama and Madundung</h2>
     <div class="speed">50M/s</div>
   </div>
   <div class="card" onclick="openProduct('Cooki and Milki',465,20,'snow')">
-    <div class="badge secret" style="top:50px;">SECRET</div>
+    <div class="badge secret">SECRET</div>
     <img src="images/Cooki_and_milki.webp" alt="">
     <h2>Cooki and Milki</h2>
     <div class="speed">465M/s</div>
   </div>
   <div class="card" onclick="openProduct('Dragon Cannelloni',2500,150,'rainbow-secret')">
-    <div class="badge secret" style="top:50px;" id="dragonSecret">SECRET</div>
-    <div class="badge rainbow" style="top:80px;" id="dragonRainbow">RAINBOW</div>
+    <div class="badge secret">SECRET</div>
+    <div class="badge rainbow">RAINBOW</div>
     <img src="images/Nah_uh.webp" alt="">
     <h2>Dragon Cannelloni</h2>
     <div class="speed">2.5B/s</div>
@@ -179,10 +173,13 @@ body {
 <!-- PRODUCT PAGE -->
 <div class="product-page" id="productPage">
 <button class="button" onclick="goHome()">← Назад</button>
+
 <div class="product-layout">
 <div>
-<div class="badge secret" id="productBadge1" style="top:50px;"></div>
-<div class="badge rainbow" id="productBadge2" style="top:80px;"></div>
+<!-- Бейджовете под бутона "← Назад" -->
+<div class="badge secret" id="productBadge1" style="top:80px;"></div>
+<div class="badge rainbow" id="productBadge2" style="top:115px;"></div>
+<img src="" class="product-img" id="productImg">
 </div>
 <div>
 <h1 id="productName"></h1>
@@ -222,6 +219,7 @@ function openProduct(name,speed,price,effect){
 
   document.getElementById('productName').innerText=name;
   document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
+  document.getElementById('productImg').src="images/" + name.replace(/\s/g,"_") + ".webp";
 
   const badge1=document.getElementById('productBadge1');
   const badge2=document.getElementById('productBadge2');
