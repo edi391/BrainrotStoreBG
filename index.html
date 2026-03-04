@@ -121,7 +121,7 @@ h1 {
 <div class="products">
   <div class="card">
     <img src="images/Garamadundung.webp" class="product-img" alt="Garamadundung">
-    <h2>Garamadundung</h2>
+    <h2>Garama and Madundung</h2>
     <p>Цена: 10 €</p>
     <button class="button" onclick="openForm('Garamadundung', 10)">Поръчай</button>
   </div>
@@ -133,7 +133,7 @@ h1 {
   </div>
   <div class="card">
     <img src="images/Nah_uh.webp" class="product-img" alt="Nah uh">
-    <h2>Nah uh</h2>
+    <h2>Dragon Cannelloni (Rainbow)</h2>
     <p>Цена: 150 €</p>
     <button class="button" onclick="openForm('Nah uh', 150)">Поръчай</button>
   </div>
@@ -141,7 +141,7 @@ h1 {
 
 <div id="orderForm" class="popup">
   <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return showConfirmation(event)">
-    <h2>Данни за доставка</h2>
+    <h2>Данни за поръчка</h2>
     <input type="hidden" id="prod" name="Product">
     <input type="hidden" id="price" name="Price">
     <input type="text" name="FirstName" placeholder="Име" required>
