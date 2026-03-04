@@ -4,302 +4,291 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brainrot Store BG</title>
+<!-- Favicon -->
+<link rel="icon" href="images/logo.png" type="image/png">
 <style>
+/* 💜 Динамичен градиент фон + ефекти */
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0f0f1a;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(-45deg, #0f0c29, #512da8, #673ab7, #311b92);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
   color: white;
 }
-
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background: #111;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-/* Products grid */
-.products {
-  display: flex;
-  gap: 30px;
-  padding: 40px;
-  flex-wrap: wrap;
-}
-
-/* Product card */
-.card {
-  background: #1a1a2e;
-  padding: 20px;
-  border-radius: 15px;
-  width: 260px;
-  cursor: pointer;
-  transition: 0.3s;
-  position: relative;
-}
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 20px #7b2cbf;
-}
-
-/* Badge */
-.badge {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  padding: 5px 10px;
-  font-size: 12px;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-/* SECRET badge */
-.secret { background:#ff006e; }
-
-/* RAINBOW badge animation */
-.rainbow {
-  background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-  background-size: 400% 400%;
-  animation: rainbowMove 4s linear infinite;
-}
-@keyframes rainbowMove {
+@keyframes gradient {
   0% {background-position:0% 50%;}
   50% {background-position:100% 50%;}
   100% {background-position:0% 50%;}
 }
 
-/* Speed text */
-.speed {
-  margin-top:8px;
-  color:#aaa;
-  font-size:14px;
+/* Header и кошница */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: rgba(0,0,0,0.6);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
-
-/* Product page */
-.product-page {
-  display: none;
-  padding: 40px;
+header h1 {
+  margin: 0;
+  font-size: 28px;
+  text-shadow: 2px 2px 5px #000;
 }
-
-.product-layout {
-  display:flex;
-  gap:50px;
-  flex-wrap:wrap;
+.cart {
+  cursor: pointer;
+  position: relative;
 }
-
-.product-img {
-  width:350px;
-  border-radius:15px;
-}
-
-/* Package selector */
-.package {
-  border:1px solid #444;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:10px;
-  cursor:pointer;
-  transition:0.3s;
-}
-.package:hover { border-color:#9d4edd; }
-.selected { border-color:#ff006e; background:#1f1f3d; }
-
-.price { font-size:24px; margin-top:15px; }
-
-/* Buttons */
-.button {
-  background:#9d4edd;
-  border:none;
-  padding:15px 25px;
-  border-radius:10px;
-  color:white;
-  cursor:pointer;
-  margin-top:15px;
-  font-size:16px;
-}
-.button:hover { background:#c77dff; }
-
-/* Info box */
-.info {
-  margin-top:40px;
-  background:#141427;
-  padding:20px;
-  border-radius:15px;
-}
-
-/* Snow effect for Cooki and Milki */
-.snowflake {
-  position: fixed;
-  top: -10px;
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #d500f9;
   color: #fff;
-  font-size: 1em;
-  user-select: none;
-  z-index: 9999;
-  pointer-events: none;
-  animation-name: fall;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
 }
-@keyframes fall {
-  0% {transform: translateY(0) translateX(0);}
-  100% {transform: translateY(100vh) translateX(50px);}
+
+/* Grid за продуктите */
+.products {
+  display: grid;
+  gap: 25px;
+  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
 }
+
+/* Карта на продукта */
+.card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(255,255,255,0.3);
+}
+.product-img {
+  width: 100%;
+  border-radius: 15px;
+  transition: scale 0.3s;
+}
+.card:hover .product-img {
+  transform: scale(1.08);
+}
+
+/* Badges */
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+.secret {
+  background: #b71c1c;
+}
+.rainbow {
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+  background-size: 300% 300%;
+  animation: rainbow 4s linear infinite;
+}
+@keyframes rainbow {
+  0% {background-position:0%;}
+  50% {background-position:100%;}
+  100% {background-position:0%;}
+}
+
+/* Бутон */
+.button {
+  padding: 12px 25px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  background: #8e24aa;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.button:hover {
+  background: #d500f9;
+  transform: scale(1.05);
+}
+
+/* Popup форма */
+.popup, .cart-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: #222;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.4);
+  width: 90%;
+  max-width: 450px;
+  text-align: left;
+  z-index: 20;
+}
+.popup h2, .cart-popup h2 {
+  text-align: center;
+}
+.popup input, .popup button, .cart-popup button {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+.popup .close, .cart-popup .close {
+  background: #b71c1c;
+}
+
+/* Checkbox */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin: 8px 0;
+  color: #fff;
+}
+.checkbox-container input {width:auto;}
 </style>
 </head>
 <body>
 
-<div class="header">
-Brainrot Store BG
-<div>🛒 0</div>
+<header>
+  <h1>Brainrot Store BG</h1>
+  <div class="cart" onclick="toggleCart()">🛒 <span class="cart-count" id="cartCount">0</span></div>
+</header>
+
+<div class="products">
+  <!-- Garama -->
+  <div class="card">
+    <div class="badge secret">Secret</div>
+    <img src="images/Garamadundung.webp" class="product-img" alt="Garama and Madundung">
+    <h2>Garama and Madundung</h2>
+    <p>50M/s</p>
+    <p>Цена: 10 €</p>
+    <button class="button" onclick="openForm('Garama and Madundung', 10)">Избери пакет</button>
+  </div>
+  <!-- Cooki -->
+  <div class="card">
+    <div class="badge secret">Secret</div>
+    <img src="images/Cooki_and_milki.webp" class="product-img" alt="Cooki and Milki">
+    <h2>Cooki and Milki</h2>
+    <p>465M/s</p>
+    <p>Цена: 20 €</p>
+    <button class="button" onclick="openForm('Cooki and Milki', 20)">Избери пакет</button>
+  </div>
+  <!-- Dragon -->
+  <div class="card">
+    <div class="badge secret">Secret</div>
+    <div class="badge rainbow">Rainbow</div>
+    <img src="images/Nah_uh.webp" class="product-img" alt="Dragon Cannelloni">
+    <h2>Dragon Cannelloni (Rainbow)</h2>
+    <p>2.5B/s</p>
+    <p>Цена: 150 €</p>
+    <button class="button" onclick="openForm('Dragon Cannelloni (Rainbow)', 150)">Избери пакет</button>
+  </div>
 </div>
 
-<!-- PRODUCTS -->
-<div class="products" id="home">
-
-<div class="card" onclick="openProduct('Garama and Madundung', 50, 10)">
-<div class="badge secret">SECRET</div>
-<img src="images/Garamadundung.webp" width="100%">
-<h2>Garama and Madundung</h2>
-<div class="speed">50M/s</div>
+<!-- Поръчка / popup -->
+<div id="orderForm" class="popup">
+  <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return submitOrder(event)">
+    <h2>Данни за поръчка</h2>
+    <input type="hidden" id="prod" name="Product">
+    <input type="hidden" id="price" name="Price">
+    <input type="number" id="quantity" placeholder="Брой" min="1" value="1" required>
+    <input type="text" name="FirstName" placeholder="Име" required>
+    <input type="text" name="LastName" placeholder="Фамилия" required>
+    <input type="email" name="Email" placeholder="Имейл" required>
+    <input type="text" name="Phone" placeholder="Телефонен номер" required>
+    <div class="checkbox-container">
+      <input type="checkbox" name="Terms" required>
+      <label>Съгласен съм с общите условия и политиката за поверителност на Brainrot Store BG</label>
+    </div>
+    <button type="submit" class="button">Добави в кошницата</button>
+    <button type="button" class="button close" onclick="closeForm()">Назад към продуктите</button>
+  </form>
 </div>
 
-<div class="card" onclick="openProduct('Cooki and Milki', 465, 20,'snow')">
-<div class="badge secret">SECRET</div>
-<img src="images/Cooki_and_milki.webp" width="100%">
-<h2>Cooki and Milki</h2>
-<div class="speed">465M/s</div>
-</div>
-
-<div class="card" onclick="openProduct('Dragon Cannelloni', 2500, 150,'rainbow')">
-<div class="badge rainbow">RAINBOW</div>
-<img src="images/Nah_uh.webp" width="100%">
-<h2>Dragon Cannelloni</h2>
-<div class="speed">2.5B/s</div>
-</div>
-
-</div>
-
-<!-- PRODUCT PAGE -->
-<div class="product-page" id="productPage">
-<button class="button" onclick="goHome()">← Назад</button>
-
-<div class="product-layout">
-<div>
-<div class="badge" id="productBadge"></div>
-<img src="" class="product-img" id="productImg">
-</div>
-
-<div>
-<h1 id="productName"></h1>
-<div class="speed" id="productSpeed"></div>
-<p>Наличност: В наличност</p>
-
-<h3>Избери пакет:</h3>
-
-<div class="package selected" onclick="selectPackage(1,1,this)">
-<b>1 брой</b><br>
-<span class="package-price" id="p1"></span>
-</div>
-
-<div class="package" onclick="selectPackage(2,2,this)">
-<b>2 броя</b><br>
-<span class="package-price" id="p2"></span>
-</div>
-
-<div class="package" onclick="selectPackage(5,5,this)">
-<b>5 броя</b><br>
-<span class="package-price" id="p5"></span>
-</div>
-
-<div class="price" id="finalPrice"></div>
-
-<button class="button">Добави в количката</button>
-
-</div>
-</div>
-
-<div class="info">
-<h3>Как ще получите вашия Brainrot?</h3>
-<p>
-След като направите поръчката, ще се свържем с вас по телефона, който сте посочили.
-Ще получите достъп до наш частен Roblox сървър, където ще можете да вземете
-вашия Brainrot директно от нашата база.
-</p>
-<p>
-Не изискваме Discord тикети или предоставяне на акаунт информация.
-Получавате продукта в същия ден, в който сте направили поръчката.
-Бързо, лесно и сигурно.
-</p>
+<!-- Кошница -->
+<div id="cartPopup" class="cart-popup">
+  <h2>Вашата кошница</h2>
+  <ul id="cartItems"></ul>
+  <button class="button close" onclick="toggleCart()">Затвори</button>
 </div>
 
 <script>
 let currentPrice = 0;
-let snowActive = false;
+let cart = [];
 
-function openProduct(name, speed, price, effect){
-  document.getElementById('home').style.display="none";
-  document.getElementById('productPage').style.display="block";
-
-  document.getElementById('productName').innerText=name;
-  document.getElementById('productSpeed').innerText=speed + ((speed>1000)?'B/s':'M/s');
-  document.getElementById('productImg').src="images/" + name.replace(/\s/g,"_") + ".webp";
-
-  const badge=document.getElementById('productBadge');
-  if(effect==='rainbow'){
-    badge.innerText="RAINBOW";
-    badge.className="badge rainbow";
-  } else {
-    badge.innerText="SECRET";
-    badge.className="badge secret";
-  }
-
-  // Set package prices dynamically
-  document.getElementById('p1').innerText=price+" €";
-  document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
-  document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
-
-  currentPrice=price;
-
-  // Snow effect for Cooki and Milki
-  removeSnow();
-  if(effect==='snow'){
-    snowActive=true;
-    for(let i=0;i<30;i++){
-      let flake=document.createElement('div');
-      flake.className='snowflake';
-      flake.style.left=Math.random()*100+'vw';
-      flake.style.fontSize=(Math.random()*10+10)+'px';
-      flake.innerText='❄';
-      flake.style.animationDuration=(Math.random()*3+3)+'s';
-      document.body.appendChild(flake);
-    }
-  }
+function openForm(name, price) {
+  document.getElementById('prod').value = name;
+  document.getElementById('price').value = price;
+  currentPrice = price;
+  document.getElementById('quantity').value = 1;
+  document.getElementById('orderForm').style.display = 'block';
 }
 
-function removeSnow(){
-  if(snowActive){
-    document.querySelectorAll('.snowflake').forEach(f=>f.remove());
-    snowActive=false;
-  }
+function closeForm() { document.getElementById('orderForm').style.display = 'none'; }
+
+function submitOrder(event) {
+  event.preventDefault();
+  const form = document.getElementById('orderFormElement');
+  const name = form.Product.value;
+  const price = Number(form.Price.value);
+  const quantity = Number(document.getElementById('quantity').value);
+  const finalPrice = calculatePrice(price, quantity);
+  
+  // Добавяне в кошницата
+  cart.push({name:name, quantity:quantity, price:finalPrice});
+  updateCart();
+  
+  closeForm();
+  alert(`Продуктът "${name}" е добавен в кошницата. Ще се свържем с вас възможно най-скоро.`);
+  form.reset();
 }
 
-function goHome(){
-  document.getElementById("productPage").style.display="none";
-  document.getElementById("home").style.display="flex";
-  removeSnow();
+function calculatePrice(price, quantity){
+  let discount = 0;
+  if(quantity==2) discount = 0.05;
+  if(quantity>=5) discount = 0.10;
+  return (price*quantity*(1-discount)).toFixed(2);
 }
 
-function selectPackage(qty,price,element){
-  document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
-  element.classList.add("selected");
-  currentPrice=price;
-  document.getElementById("finalPrice").innerText="Общо: "+price+" €";
+function updateCart(){
+  const list = document.getElementById('cartItems');
+  list.innerHTML='';
+  cart.forEach(item=>{
+    const li = document.createElement('li');
+    li.textContent = `${item.quantity} x ${item.name} - ${item.price} €`;
+    list.appendChild(li);
+  });
+  document.getElementById('cartCount').textContent = cart.length;
+}
+
+function toggleCart(){
+  const popup = document.getElementById('cartPopup');
+  popup.style.display = popup.style.display==='block'?'none':'block';
 }
 </script>
+
 </body>
 </html>
