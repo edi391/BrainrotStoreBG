@@ -9,8 +9,6 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='24' font-size='24'>🧠</text></svg>">
 
 <style>
-/* -------------- GLOBAL STYLES --------------- */
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -26,8 +24,7 @@ body {
   100%{background-position:0% 50%;}
 }
 
-/* ------------- HEADER & NAVIGATION ------------ */
-
+/* HEADER */
 .header {
   background: rgba(0,0,0,0.6);
   padding: 15px 30px;
@@ -38,32 +35,20 @@ body {
   top: 0;
   z-index: 1000;
 }
-.header h1 {
-  margin: 0;
-  font-size: 28px;
-}
-.header .cart-icon {
-  cursor: pointer;
-  font-size: 24px;
-}
+.header h1 { margin: 0; font-size: 28px; }
+.header .cart-icon { cursor: pointer; font-size: 24px; }
 .header .cart-icon span {
-  background: #ff3366;
-  padding: 2px 8px;
-  border-radius: 12px;
-  margin-left: 5px;
-  font-size: 14px;
-  vertical-align: top;
+  background: #ff3366; padding: 2px 8px; border-radius: 12px;
+  margin-left: 5px; font-size: 14px; vertical-align: top;
 }
 
-/* ---------------- PRODUCTS GRID --------------- */
-
+/* PRODUCTS */
 .products {
   padding: 25px;
   display: grid;
   gap: 30px;
   grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
 }
-
 .card {
   background: rgba(255,255,255,0.15);
   border-radius: 18px;
@@ -71,85 +56,50 @@ body {
   transition: 0.3s;
   text-align: center;
 }
-.card:hover {
-  transform: translateY(-8px);
-  box-shadow:0 8px 20px rgba(255,255,255,0.3);
-}
-.card img {
-  width: 100%;
-  border-radius: 15px;
-}
-.card h2 {
-  margin: 10px 0 5px;
-  font-size: 20px;
-}
-.card p {
-  margin: 5px 0;
-  font-size: 18px;
-}
-.card button {
-  margin-top: 10px;
-}
+.card:hover { transform: translateY(-8px); box-shadow:0 8px 20px rgba(255,255,255,0.3); }
+.card img { width: 100%; border-radius: 15px; }
+.card h2 { margin:10px 0 5px; font-size:20px; }
+.card p { margin:5px 0; font-size:18px; }
 
-/* --------------- BUTTONS ---------------- */
-
+/* BUTTONS */
 .button {
-  padding: 12px 25px;
-  border: none;
-  border-radius: 25px;
-  background: linear-gradient(45deg,#8e24aa,#d500f9);
-  cursor: pointer;
-  font-size: 16px;
-  color: #fff;
+  padding:12px 25px;
+  border:none; border-radius:25px;
+  background:linear-gradient(45deg,#8e24aa,#d500f9);
+  cursor:pointer; font-size:16px; color:#fff;
 }
 .button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(45deg,#d500f9,#ff00cc);
+  transform:scale(1.05);
+  background:linear-gradient(45deg,#d500f9,#ff00cc);
 }
 
-/* ------------- CART POPUP & FORM ------------ */
-
+/* POPUPS */
 .popup, #cartPopup {
-  display: none;
-  position: fixed;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  display:none;
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
   background: rgba(20,20,20,0.95);
-  border-radius: 20px;
-  padding: 25px;
-  max-width: 500px;
-  width: 90%;
-  z-index: 1001;
+  border-radius:20px;
+  padding:25px;
+  max-width:500px;
+  width:90%;
+  z-index:1001;
   box-shadow:0 0 20px rgba(255,255,255,0.3);
 }
 #cartPopup table, #cartPopup th, #cartPopup td {
-  width:100%;
-  border-collapse: collapse;
-  border: 1px solid #fff;
-  padding: 8px;
-  text-align:left;
+  width:100%; border-collapse:collapse;
+  border:1px solid #fff; padding:8px; text-align:left;
 }
-#cartPopup th {
-  background: rgba(255,255,255,0.2);
-}
-.popup input {
-  width: 90%;
-  margin: 8px 0;
-  padding: 10px;
-  border-radius: 8px;
-  border:none;
-  font-size: 16px;
-}
+#cartPopup th { background: rgba(255,255,255,0.2); }
+.popup input { width:90%; margin:8px 0; padding:10px; border-radius:8px; border:none; font-size:16px; }
 .checkbox-container {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin:10px 0;
+  display:flex; align-items:center; gap:5px; margin:10px 0; font-size:14px; color:#fff;
 }
-.popup .close, #cartPopup .close {
-  background:#b71c1c;
-}
+.checkbox-container input[type="checkbox"] { width:auto; height:auto; margin:0; }
+.checkbox-container label { margin:0; }
+.popup .close, #cartPopup .close { background:#b71c1c; }
+
 </style>
 </head>
 <body>
@@ -157,16 +107,14 @@ body {
 <!-- HEADER -->
 <div class="header">
   <h1>Brainrot Store BG</h1>
-  <div class="cart-icon" onclick="openCart()">
-    🛒 <span id="cartCount">0</span>
-  </div>
+  <div class="cart-icon" onclick="openCart()">🛒 <span id="cartCount">0</span></div>
 </div>
 
 <!-- PRODUCTS -->
 <div class="products">
   <div class="card">
     <img src="images/Garamadundung.webp" alt="Garamadundung">
-    <h2>Garamadundung</h2>
+    <h2>Garama and Madundung</h2>
     <p>Цена: 10 €</p>
     <button class="button" onclick="addToCart('Garamadundung',10)">Добави в кошницата</button>
   </div>
@@ -187,9 +135,7 @@ body {
 <!-- CART POPUP -->
 <div id="cartPopup">
   <h2>Вашата кошница</h2>
-  <table id="cartTable">
-    <tr><th>Продукт</th><th>Цена</th><th></th></tr>
-  </table>
+  <table id="cartTable"><tr><th>Продукт</th><th>Цена</th><th></th></tr></table>
   <p><strong>Общо: </strong><span id="cartTotal">0</span> €</p>
   <button class="button" onclick="openOrderForm()">Поръчай</button>
   <button class="button close" onclick="closeCart()">Затвори</button>
@@ -215,63 +161,54 @@ body {
 </div>
 
 <script>
-// 🛒 CART LOGIC
 let cart = [];
 
-function updateCartCount(){
-  document.getElementById('cartCount').textContent = cart.length;
-}
+function updateCartCount(){ document.getElementById('cartCount').textContent = cart.length; }
 
 function addToCart(name, price){
-  cart.push({name, price});
+  let displayName=name;
+  if(name==="Garamadundung") displayName="Garama and Madundung";
+  if(name==="Nah uh") displayName="Dragon Cannelloni (Rainbow)";
+  cart.push({name:displayName, price});
   updateCartCount();
 }
 
-function openCart(){
-  document.getElementById('cartPopup').style.display='block';
-  renderCart();
-}
-
-function closeCart(){
-  document.getElementById('cartPopup').style.display='none';
-}
+function openCart(){ document.getElementById('cartPopup').style.display='block'; renderCart(); }
+function closeCart(){ document.getElementById('cartPopup').style.display='none'; }
 
 function renderCart(){
-  const table = document.getElementById('cartTable');
-  table.innerHTML = '<tr><th>Продукт</th><th>Цена</th><th></th></tr>';
-  let total = 0;
+  const table=document.getElementById('cartTable');
+  table.innerHTML='<tr><th>Продукт</th><th>Цена</th><th></th></tr>';
+  let total=0;
   cart.forEach((item,index)=>{
-    total += item.price;
-    const row = table.insertRow();
-    row.insertCell(0).textContent = item.name;
-    row.insertCell(1).textContent = item.price + ' €';
-    const btn = document.createElement('button');
-    btn.textContent = 'X';
+    total+=item.price;
+    const row=table.insertRow();
+    row.insertCell(0).textContent=item.name;
+    row.insertCell(1).textContent=item.price+' €';
+    const btn=document.createElement('button');
+    btn.textContent='X';
     btn.className='button close';
     btn.onclick=()=>{cart.splice(index,1); renderCart(); updateCartCount();};
     row.insertCell(2).appendChild(btn);
   });
-  document.getElementById('cartTotal').textContent = total.toFixed(2);
+  document.getElementById('cartTotal').textContent=total.toFixed(2);
 }
 
 function openOrderForm(){
   closeCart();
-  document.getElementById('Products').value = JSON.stringify(cart);
+  document.getElementById('Products').value=JSON.stringify(cart);
   document.getElementById('orderForm').style.display='block';
 }
-
-function closeOrderForm(){
-  document.getElementById('orderForm').style.display='none';
-}
+function closeOrderForm(){ document.getElementById('orderForm').style.display='none'; }
 
 function handleOrderSubmit(event){
   event.preventDefault();
   const form=document.getElementById('orderFormElement');
-  fetch(form.action,{method:form.method,body:new FormData(form),headers:{'Accept':'application/json'}})
+  fetch(form.action,{method:form.method, body:new FormData(form), headers:{'Accept':'application/json'}})
   .then(resp=>{
     if(resp.ok){
       closeOrderForm();
-      cart = [];
+      cart=[];
       updateCartCount();
       alert("Поръчката е изпратена! Ще се свържем с вас възможно най-скоро.");
       form.reset();
@@ -280,5 +217,6 @@ function handleOrderSubmit(event){
   return false;
 }
 </script>
+
 </body>
 </html>
