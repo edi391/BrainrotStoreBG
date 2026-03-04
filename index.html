@@ -64,7 +64,6 @@ body {
 /* Badges */
 .badge{
   position:absolute;
-  top:15px;
   left:15px;
   padding:5px 10px;
   border-radius:8px;
@@ -156,20 +155,20 @@ body {
 
 <div class="products" id="home">
   <div class="card" onclick="openProduct('Garama and Madundung',50,10)">
-    <div class="badge secret">SECRET</div>
+    <div class="badge secret" style="top:20px;">SECRET</div>
     <img src="images/Garamadundung.webp" alt="">
     <h2>Garama and Madundung</h2>
     <div class="speed">50M/s</div>
   </div>
   <div class="card" onclick="openProduct('Cooki and Milki',465,20,'snow')">
-    <div class="badge secret">SECRET</div>
+    <div class="badge secret" style="top:20px;">SECRET</div>
     <img src="images/Cooki_and_milki.webp" alt="">
     <h2>Cooki and Milki</h2>
     <div class="speed">465M/s</div>
   </div>
   <div class="card" onclick="openProduct('Dragon Cannelloni',2500,150,'rainbow-secret')">
-    <div class="badge secret" id="dragonSecret">SECRET</div>
-    <div class="badge rainbow" style="top:45px;" id="dragonRainbow">RAINBOW</div>
+    <div class="badge secret" id="dragonSecret" style="top:20px;">SECRET</div>
+    <div class="badge rainbow" style="top:50px;" id="dragonRainbow">RAINBOW</div>
     <img src="images/Nah_uh.webp" alt="">
     <h2>Dragon Cannelloni</h2>
     <div class="speed">2.5B/s</div>
@@ -181,8 +180,8 @@ body {
 <button class="button" onclick="goHome()">← Назад</button>
 <div class="product-layout">
 <div>
-<div class="badge secret" id="productBadge1"></div>
-<div class="badge rainbow" id="productBadge2" style="top:50px;"></div>
+<div class="badge secret" id="productBadge1" style="top:25px;"></div>
+<div class="badge rainbow" id="productBadge2" style="top:55px;"></div>
 <img src="" class="product-img" id="productImg">
 </div>
 <div>
@@ -225,14 +224,14 @@ function openProduct(name,speed,price,effect){
 
   const productImg = document.getElementById('productImg');
   const imgPath = "images/" + name.replace(/\s/g,"_") + ".webp";
-  productImg.style.display = "none"; // скриваме по подразбиране
+  productImg.style.display = "none"; 
   const imgTest = new Image();
   imgTest.onload = () => {
       productImg.src = imgPath;
-      productImg.style.display = "block"; // показваме само ако съществува
+      productImg.style.display = "block"; 
   };
   imgTest.onerror = () => {
-      productImg.style.display = "none"; // ако няма файл, не се показва
+      productImg.style.display = "none"; 
   };
   imgTest.src = imgPath;
 
@@ -254,13 +253,11 @@ function openProduct(name,speed,price,effect){
     badge1.innerText="SECRET";
   }
 
-  // Package prices
   document.getElementById('p1').innerText=price+" €";
   document.getElementById('p2').innerText=(price*2*0.95).toFixed(2)+" € (-5%)";
   document.getElementById('p5').innerText=(price*5*0.90).toFixed(2)+" € (-10%)";
   currentPrice=price;
 
-  // Snow effect
   removeSnow();
   if(effect==='snow'){
     snowActive=true;
