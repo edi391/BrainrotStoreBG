@@ -29,7 +29,7 @@ body {
   font-size:22px;
   font-weight:bold;
 }
-.header img{height:40px;}
+/* Cart badge */
 .cart-count{
   background:#ff006e;
   padding:5px 10px;
@@ -64,13 +64,12 @@ body {
 }
 /* Badges */
 .badge{
-  position:absolute;
-  top:15px;
-  left:15px;
+  display:inline-block;
   padding:5px 10px;
   border-radius:8px;
   font-size:12px;
   font-weight:bold;
+  margin-bottom:10px;
 }
 .secret{background:#ff006e;}
 .rainbow{
@@ -169,8 +168,8 @@ body {
     <div class="speed">465M/s</div>
   </div>
   <div class="card" onclick="openProduct('Dragon Cannelloni',2500,150,'rainbow-secret')">
-    <div class="badge secret" id="dragonSecret">SECRET</div>
-    <div class="badge rainbow" style="top:45px;" id="dragonRainbow">RAINBOW</div>
+    <div class="badge secret">SECRET</div>
+    <div class="badge rainbow" style="margin-top:10px;">RAINBOW</div>
     <img src="images/Nah_uh.webp" alt="">
     <h2>Dragon Cannelloni</h2>
     <div class="speed">2.5B/s</div>
@@ -183,7 +182,7 @@ body {
 <div class="product-layout">
 <div>
 <div class="badge secret" id="productBadge1"></div>
-<div class="badge rainbow" id="productBadge2" style="top:50px;"></div>
+<div class="badge rainbow" id="productBadge2" style="margin-top:10px;"></div>
 <img src="" class="product-img" id="productImg">
 </div>
 <div>
