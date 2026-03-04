@@ -86,20 +86,32 @@ h1 {
   padding: 30px;
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(255,255,255,0.4);
-  width: 90%;
-  max-width: 400px;
+  width: 95%;
+  max-width: 450px;
+  text-align: left;
 }
-.popup input {
+.popup h2 {text-align:center;}
+.popup input, .popup button {
   width: 90%;
   padding: 10px;
-  margin: 8px;
+  margin: 8px 0;
   border-radius: 10px;
   border: none;
+  font-size: 16px;
 }
 .popup .close {
   background: #b71c1c;
-  margin-top: 10px;
+  width: 90%;
 }
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin: 8px 0;
+  color: #fff;
+}
+.checkbox-container input {width:auto;}
 </style>
 </head>
 <body>
@@ -107,79 +119,91 @@ h1 {
 <h1>Brainrot Store BG</h1>
 
 <div class="products">
-  <!-- Продукт 1 -->
   <div class="card">
     <img src="images/Garamadundung.webp" class="product-img" alt="Garamadundung">
     <h2>Garamadundung</h2>
     <p>Цена: 10 €</p>
-    <button class="button" onclick="openForm('Garamadundung')">Поръчай</button>
+    <button class="button" onclick="openForm('Garamadundung', 10)">Поръчай</button>
   </div>
-  <!-- Продукт 2 -->
   <div class="card">
     <img src="images/Cooki_and_milki.webp" class="product-img" alt="Cooki and Milki">
     <h2>Cooki and Milki</h2>
     <p>Цена: 20 €</p>
-    <button class="button" onclick="openForm('Cooki and Milki')">Поръчай</button>
+    <button class="button" onclick="openForm('Cooki and Milki', 20)">Поръчай</button>
   </div>
-  <!-- Продукт 3 -->
   <div class="card">
     <img src="images/Nah_uh.webp" class="product-img" alt="Nah uh">
     <h2>Nah uh</h2>
     <p>Цена: 150 €</p>
-    <button class="button" onclick="openForm('Nah uh')">Поръчай</button>
+    <button class="button" onclick="openForm('Nah uh', 150)">Поръчай</button>
   </div>
 </div>
 
-<!-- 📩 Popup форма за поръчки -->
 <div id="orderForm" class="popup">
   <form id="orderFormElement" action="https://formspree.io/f/mreanjqb" method="POST" onsubmit="return showConfirmation(event)">
-    <h2>Поръчка:</h2>
+    <h2>Данни за доставка</h2>
     <input type="hidden" id="prod" name="Product">
-    <input type="text" name="Username" placeholder="Roblox Username" required>
+    <input type="hidden" id="price" name="Price">
+    <input type="text" name="FirstName" placeholder="Име" required>
+    <input type="text" name="LastName" placeholder="Фамилия" required>
+    <input type="email" name="Email" placeholder="Имейл" required>
     <input type="text" name="Phone" placeholder="Телефонен номер" required>
-    <button type="submit" class="button">Изпрати</button>
-    <button type="button" class="button close" onclick="closeForm()">Отказ</button>
+    <input type="text" name="DiscountCode" placeholder="Код за отстъпка (по избор)">
+    <div class="checkbox-container">
+      <input type="checkbox" name="Terms" required>
+      <label>Съгласен съм с общите условия и политиката за поверителност на Brainrot Store BG</label>
+    </div>
+    <button type="submit" class="button">Премини към плащане</button>
+    <button type="button" class="button close" onclick="closeForm()">Назад към продуктите</button>
   </form>
 </div>
 
 <script>
-function openForm(name) {
+let currentPrice = 0;
+
+function openForm(name, price) {
   document.getElementById('prod').value = name;
+  document.getElementById('price').value = price;
+  currentPrice = price;
   document.getElementById('orderForm').style.display = 'block';
 }
 
-// Затваряне на popup
 function closeForm() {
   document.getElementById('orderForm').style.display = 'none';
 }
 
-// След изпращане на формата, показваме съобщение на сайта
 function showConfirmation(event) {
-  event.preventDefault(); // спираме default submit, за да покажем съобщението
+  event.preventDefault();
   const form = document.getElementById('orderFormElement');
+  const discountInput = form.DiscountCode.value.trim();
+  let finalPrice = currentPrice;
 
-  // Пращаме реално формата към Formspree
+  // Пример: код "DISCOUNT10" дава 10% отстъпка
+  if(discountInput.toUpperCase() === "DISCOUNT10") {
+    finalPrice = (currentPrice * 0.9).toFixed(2);
+  }
+
+  // Добавяме финалната цена като скрито поле
+  form.querySelector('#price').value = finalPrice;
+
+  // Изпращане на Formspree
   fetch(form.action, {
     method: form.method,
     body: new FormData(form),
-    headers: {
-      'Accept': 'application/json'
-    }
+    headers: { 'Accept': 'application/json' }
   }).then(response => {
-    if (response.ok) {
-      // Затваряме формата
+    if(response.ok){
       closeForm();
-      // Показваме съобщение
-      alert("Поръчката ви е направена успешно! Ще се свържем с вас в рамките на 1 работен час.");
-      form.reset(); // чистим формата за следваща поръчка
+      alert(`Поръчката ви е направена успешно! Продукт: ${form.Product.value}, цена: ${finalPrice} €. Ще се свържем с вас в рамките на 1 работен час.`);
+      form.reset();
     } else {
       alert("Възникна грешка. Моля, опитайте отново.");
     }
-  }).catch(error => {
+  }).catch(error=>{
     alert("Възникна грешка. Моля, опитайте отново.");
   });
 
-  return false; // за да не презарежда страницата
+  return false;
 }
 </script>
 
